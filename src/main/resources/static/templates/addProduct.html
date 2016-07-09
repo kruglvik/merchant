@@ -1,0 +1,51 @@
+<md-dialog add-item-dialog>
+    <md-dialog-content class="md-dialog-content">
+
+        <h2 class="md-title">Новый продукт</h2>
+
+        <p ng-if="item.form.$submitted && item.form.$invalid" class="md-warn" layout="row" layout-align="start center">
+            <i class="material-icons">error_outline</i>
+            <span>&nbsp; Все поля обязательны.</span>
+        </p>
+
+        <form name="item.form" ng-submit="ctrl.addItem()">
+            <div layout="row" class="input-row">
+                <md-input-container flex>
+                    <label>Имя</label>
+                    <input name="name" ng-model="product.name" md-maxlength="40" required>
+                </md-input-container>
+            </div>
+            <div layout="row" class="input-row">
+                <md-input-container flex>
+                    <label>Код</label>
+                    <input name="name" ng-model="product.code" required>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Код места хранения</label>
+                    <input name="name" ng-model="product.storageCode" required>
+                </md-input-container>
+            </div>
+            <div layout="row" class="input-row">
+                <md-input-container flex>
+                    <label>Стоимость(₽)</label>
+                    <input name="sodium" type="number" min="0" ng-model="product.price" required>
+                </md-input-container>
+                <md-input-container flex>
+                    <label>Скидка (%)</label>
+                    <input name="calcium" type="number" min="0" max="99" ng-model="product.discount" required>
+                </md-input-container>
+                <md-input-container flex>
+                    <md-datepicker ng-model="product.expirationDate" md-min-date="minExpirationDate"
+                                   md-placeholder="Срок годности"></md-datepicker>
+                </md-input-container>
+            </div>
+        </form>
+
+    </md-dialog-content>
+
+    <div class="md-actions">
+        <md-button class="md-primary" ng-click="ctrl.addItem()" ng-disabled="item.form.$invalid">Добавить</md-button>
+        <md-button class="md-primary" ng-click="ctrl.cancel()">Отмена</md-button>
+    </div>
+
+</md-dialog>

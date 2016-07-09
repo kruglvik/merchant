@@ -1,0 +1,14 @@
+{
+  "name": "merchant",
+  "description": "Product accounting system",
+  "version": "0.0.1-SNAPSHOT",
+  "homepage": "https://github.com/kruglvik/merchant",
+  "private": false,
+  "license": "MIT",
+  "dependencies": {
+    "angular": "1.5.8",
+    "angular-resource": "1.5.8",
+    "angular-material": "1.1.1",
+    "angular-material-data-table": "^0.10.9"
+  }
+}

@@ -1,0 +1,57 @@
+<!doctype html>
+<html ng-app="app">
+<head>
+    <title>Merchant - Система учета товаров</title>
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css"/>
+    <link rel="stylesheet" href="bower_components/angular-material-data-table/dist/md-data-table.min.css"/>
+    <link rel="stylesheet" href="iconfonts/material-icons.css"/>
+</head>
+<body>
+
+    <md-toolbar class="md-tall md-whiteframe-4dp site-content-toolbar">
+        <span flex></span>
+
+        <div layout="row" class="md-toolbar-tools md-toolbar-tools-bottom">
+            <h2 class="md-flex">Merchant - Система учета товаров</h2>
+        </div>
+    </md-toolbar>
+
+    <md-content layout="column" flex >
+
+        <md-card ng-controller="ProductController">
+
+            <md-toolbar class="md-table-toolbar md-default">
+                <div class="md-toolbar-tools">
+                    <div flex></div>
+                    <md-button class="md-icon-button" ng-show="showOnlyExpired" ng-click="deleteAllExpired()">
+                        <md-icon>delete</md-icon>
+                    </md-button>
+                    <md-button class="md-icon-button" ng-click="addProduct()">
+                        <md-icon>add</md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+
+            <md-tabs md-dynamic-height md-border-bottom>
+                <md-tab label="Все" ng-click="showOnlyExpired=false">
+                    <span ng-include="'templates/productTable.html'"></span>
+                </md-tab>
+                <md-tab label="Просроченные" ng-click="showOnlyExpired=true">
+                    <span ng-include="'templates/productTable.html'"></span>
+                </md-tab>
+            </md-tabs>
+        </md-card>
+    </md-content>
+
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="bower_components/angular-material-data-table/dist/md-data-table.min.js"></script>
+
+    <script src="js/app.js"></script>
+    <script src="js/controllers.js"></script>
+
+</body>
+</html>

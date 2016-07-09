@@ -1,0 +1,14 @@
+{
+  "name": "merchant",
+  "description": "product accounting system",
+  "version": "0.0.1-SNAPSHOT",
+  "engines": {
+    "node": "0.12.x"
+  },
+  "dependencies": {
+    "npm": "3.10.9",
+    "bower": "1.7.9"
+  },
+  "repository": "https://github.com/kruglvik/merchant",
+  "license": "MIT"
+}
