@@ -1,4 +1,4 @@
-app.controller('ProductController', ['$mdDialog', '$scope', '$productResource', function ($mdDialog, $scope, $productResource) {
+app.controller('ProductController', ['$mdEditDialog', '$mdDialog', '$scope', '$productResource', function ($mdEditDialog, $mdDialog, $scope, $productResource) {
       'use strict';
 
       var bookmark;
@@ -70,6 +70,24 @@ app.controller('ProductController', ['$mdDialog', '$scope', '$productResource', 
           console.info("Deleting expired products with id: " + productIds);
           $productResource.delete({q: productIds}, $scope.getProducts);
       }
+
+      $scope.setDiscount = function (event, product) {
+          var editDialog = {
+            modelValue: product.discountRatio,
+            save: function (input) {
+              product.discountRatio = input.$modelValue;
+              $productResource.update({ id: product.id }, product);
+            },
+            targetEvent: event,
+            type: 'number',
+            validators: {
+              'min': 0,
+              'max': 100
+            }
+          };
+
+          var promise = $mdEditDialog.small(editDialog);
+        };
 }]);
 
 app.controller('AddProductController', ['$mdDialog', '$productResource', '$scope', function ($mdDialog, $productResource, $scope) {

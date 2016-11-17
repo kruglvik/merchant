@@ -6,20 +6,20 @@
             <th md-column md-order-by="code"><span>Код</span></th>
             <th md-column md-order-by="storageCode"><span>Код места хранения</span></th>
             <th md-column md-numeric md-order-by="price" md-desc><span>Стоимость(₽)</span></th>
-            <th md-column md-numeric md-order-by="discountRatio" hide-gt-xs show-gt-lg><span>Скидка (%)</span>
+            <th md-column md-numeric md-order-by="discountRatio"><span>Скидка (%)</span>
             </th>
             <th md-column md-order-by="expirationDate"><span>Срок годности</span></th>
         </tr>
         </thead>
         <tbody md-body>
-        <tr md-row md-select="product" md-auto-select="false"
+        <tr md-row md-select="product" md-auto-select="false" ng-init="daysToExpiry = daysToExpiry(product)"
             ng-repeat="product in products | filter: expirationFilter | orderBy: query.order | limitTo: query.limit : ((query.page -1) * query.limit) as found">
             <td md-cell>{{product.name}}</td>
             <td md-cell>{{product.code}}</td>
             <td md-cell>{{product.storageCode}}</td>
             <td md-cell>{{product.price | number: 2}}</td>
-            <td md-cell hide-gt-xs show-gt-lg>{{product.discountRatio}}%</td>
-            <td md-cell ng-init="daysToExpiry = daysToExpiry(product)">
+            <td md-cell ng-click="daysToExpiry > 0 && setDiscount($event, product)">{{product.discountRatio}}%</td>
+            <td md-cell>
                 {{daysToExpiry > 0 ? 'Истекает через ' + daysToExpiry + ' дней' : 'Истек'}}
             </td>
         </tr>
