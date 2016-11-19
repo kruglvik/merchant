@@ -28,6 +28,7 @@ app.controller('ProductController', ['$mdEditDialog', '$mdDialog', '$scope', '$p
 
       function success(products) {
         $scope.products = products;
+        $scope.calculateTotalPrice();
       }
 
       $scope.$watch('query.filter', function (newValue, oldValue) {
@@ -44,7 +45,7 @@ app.controller('ProductController', ['$mdEditDialog', '$mdDialog', '$scope', '$p
           }
 
           $scope.getProducts();
-        });
+      });
 
       var minExpirationDate = new Date()
 
@@ -54,6 +55,10 @@ app.controller('ProductController', ['$mdEditDialog', '$mdDialog', '$scope', '$p
       }
 
       $scope.showOnlyExpired = false
+
+      $scope.$watch('showOnlyExpired', function() {
+          $scope.calculateTotalPrice()
+      });
 
       $scope.expirationFilter = function (product) {
           return !$scope.showOnlyExpired || $scope.expired(product);
@@ -87,7 +92,25 @@ app.controller('ProductController', ['$mdEditDialog', '$mdDialog', '$scope', '$p
           };
 
           var promise = $mdEditDialog.small(editDialog);
-        };
+      };
+
+      $scope.calculateTotalPrice = function() {
+        if (!$scope.products) {
+            return;
+        }
+        var total = 0;
+        var totalWithDiscount = 0;
+        for (var i=0; i<$scope.products.length; i++) {
+            var product = $scope.products[i];
+            if ($scope.expirationFilter(product)) {
+                total += product.price;
+                totalWithDiscount += (product.price * (1 - (product.discountRatio / 100)))
+            }
+        }
+        $scope.totalPrice = total;
+        $scope.totalPriceWithDiscount = totalWithDiscount;
+        $scope.totalDiscount = total - totalWithDiscount;
+      }
 }]);
 
 app.controller('AddProductController', ['$mdDialog', '$productResource', '$scope', function ($mdDialog, $productResource, $scope) {
