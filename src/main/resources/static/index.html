@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css"/>
     <link rel="stylesheet" href="bower_components/angular-material-data-table/dist/md-data-table.min.css"/>
     <link rel="stylesheet" href="iconfonts/material-icons.css"/>
+    <link rel="stylesheet" href="css/main.css"/>
 </head>
 <body>
 
@@ -16,9 +17,20 @@
         </div>
     </md-toolbar>
 
-    <md-content layout="column" flex >
-
-        <md-card ng-controller="ProductController">
+    <md-content layout="column" flex ng-controller="ProductController">
+        <md-card>
+            <div layout="row" layout-wrap>
+                <md-input-container ng-show="!showOnlyExpired">
+                    <label>Истекает через</label>
+                    <input ng-model="filterOptions.expiresIn" type="number" min="0" ng-enter="setExpiresInFilter()">
+                </md-input-container>
+                <md-input-container ng-show="showOnlyExpired">
+                    <label>Дата истечения</label>
+                    <md-datepicker ng-model="filterOptions.selectExpiryDate" ng-enter="setExpiresInFilter()"/>
+                </md-input-container>
+            </div>
+        </md-card>
+        <md-card>
 
             <md-toolbar class="md-table-toolbar md-default">
                 <div class="md-toolbar-tools">

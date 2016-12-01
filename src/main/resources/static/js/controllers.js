@@ -11,6 +11,11 @@ app.controller('ProductController', ['$mdEditDialog', '$mdDialog', '$scope', '$p
         page: 1
       };
 
+      $scope.filterOptions = {
+        expiresIn: null,
+        selectExpiryDate: null
+      };
+
       $scope.addProduct = function (event) {
           $mdDialog.show({
             clickOutsideToClose: true,
@@ -56,12 +61,23 @@ app.controller('ProductController', ['$mdEditDialog', '$mdDialog', '$scope', '$p
 
       $scope.showOnlyExpired = false
 
-      $scope.$watch('showOnlyExpired', function() {
+      $scope.$watchGroup(['showOnlyExpired', 'filterOptions.expiresIn', 'filterOptions.selectExpiryDate'], function() {
           $scope.calculateTotalPrice()
       });
 
       $scope.expirationFilter = function (product) {
-          return !$scope.showOnlyExpired || $scope.expired(product);
+          if ($scope.showOnlyExpired) {
+            if (!$scope.expired(product)) {
+                return false;
+            }
+            if ($scope.filterOptions.selectExpiryDate == null) {
+                return true;
+            }
+            return timestampAtStartOfDay(product.expirationDate) == timestampAtStartOfDay($scope.filterOptions.selectExpiryDate.getTime())
+          } else {
+            return $scope.filterOptions.expiresIn == null ||
+                $scope.daysToExpiry(product) == $scope.filterOptions.expiresIn
+          }
       };
 
       $scope.expired = function (product) {
@@ -110,6 +126,10 @@ app.controller('ProductController', ['$mdEditDialog', '$mdDialog', '$scope', '$p
         $scope.totalPrice = total;
         $scope.totalPriceWithDiscount = totalWithDiscount;
         $scope.totalDiscount = total - totalWithDiscount;
+      }
+
+      var timestampAtStartOfDay = function(timestamp) {
+        return timestamp -= timestamp % (1000 * 3600 * 24)
       }
 }]);
 
