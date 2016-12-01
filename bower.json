@@ -6,8 +6,8 @@
   "private": false,
   "license": "MIT",
   "dependencies": {
-    "angular": "1.5.8",
-    "angular-resource": "1.5.8",
+    "angular": "1.5.9",
+    "angular-resource": "1.5.9",
     "angular-material": "1.1.1",
     "angular-material-data-table": "0.10.9"
   }
